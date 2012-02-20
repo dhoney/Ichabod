@@ -69,9 +69,11 @@ def run(runFile):
     
     return
 
+import pika
+
+# STEP1 - Create the queue
 def create_queue(name):
     connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
-                 pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))  
     channel = connection.channel()
 
     if type(name) != str:
@@ -79,35 +81,46 @@ def create_queue(name):
     channel.queue_declare(queue=name)
 
     print 'Queue ' + name + ' created.'
-    return
+    queue1={'name':name,'connection':connection, 'channel':channel}
+    return queue1
     
-def submit_job(queue, runFile):
-    if type(name) != str:
-        name = str(name)
-    elif type(queue) != str:
-        queue = str(queue)
+#STEP2 - Add a job-filename
+def submit_job(queue2, runFile):
+    if type(runFile) != str:
+        runFile = str(runFile)
+    elif type(queue2) != dict:
+        return "Error: Expecting argument 1 as dictionary type"
         
-    channel.basic_publish(exchange='', routing_key=queue, body=runFile)
-    print ' [x] Submitted job file: ' + runFile + ' ,to queue: ' + queue
-    connection.close()
-    return
+    queue2['channel'].basic_publish(exchange='', routing_key=queue2['name'], body=runFile)
+    print ' [x] Submitted job file: ' + runFile + ' ,to queue: ' + queue2['name']
+    queue2['connection'].close()
     
-def run_job(name):
-    if type(name) != str:
-        name = str(name)
-    #check queue exists just in case
-    channel.queue_declare(queue=name)
+    queue2['job'] = runFile
+    return queue2
     
-    channel.basic_consume(callback, queue=name, no_ack=True)
-    print "[*] Waiting for jobs. Press CTRL+C to exit."
+#STEP3 - Initiate queue connection as a 'client' and run job
+def run_job(queue3):
+    if type(queue3) != dict:
+        return "Error: Expecting argument 1 as dictionary type"
+        
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+    channel = connection.channel()
+
+    channel.queue_declare(queue='hello')
+
+    print ' [*] Waiting for messages. To exit press CTRL+C'
+
+    channel.basic_consume(callback, queue='hello', no_ack=True)
     channel.start_consuming()
 
     return
 
+#STEP4 - this is a RabbitMQ function called by 'run_job' to actually execute the job
 def callback(ch, method, properties, body):
     print '[x] Received %r' % (body,)
     print 'running job'
-    run(body)
+    sp.run(body) # ironically this in turn calls my run function to execute the file
     print 'job done'
+
     
     
