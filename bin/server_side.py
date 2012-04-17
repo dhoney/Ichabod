@@ -101,7 +101,7 @@ class IchabodService(rpyc.SlaveService):
         # much easier using startup scripts instead
         localpath = '../outbound/'+runFile
         
-        service = rpyc.connect(lowest_host[0], lowest_host[1])
+        service = rpyc.connect(lowest_host[0], int(lowest_host[1]))
         #make sure there aren't any files on the host node's end with the same filename
         remoteFile = service.exposed_verify_inbound(runFile)
         
