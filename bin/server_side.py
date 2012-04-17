@@ -103,7 +103,7 @@ class IchabodService(rpyc.SlaveService):
         
         service = rpyc.connect(lowest_host[0], int(lowest_host[1]))
         #make sure there aren't any files on the host node's end with the same filename
-        remoteFile = service.exposed_verify_inbound(runFile)
+        remoteFile = service.root.exposed_verify_inbound(runFile)
         
         remotepath = '../inbound/' + str(remoteFile)
         
