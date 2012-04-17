@@ -66,7 +66,7 @@ class IchabodService(rpyc.SlaveService):
         print "Loads of all nodes retrieved: " + str(loads)
         return loads
         
-    def exposed_upload_job(self, runFile):
+    def exposed_upload_job(self, runFile): #argument runFile is literally the string name of the file, assumed to be in the /outbound directory
         hosts = self.exposed_get_loads()
         
         #Prelimenary ~ Parse verify file name
@@ -93,19 +93,20 @@ class IchabodService(rpyc.SlaveService):
         #STEP 2 - Create classical connection and make use of upload() method
         #         exposed by SlaveService to send job file to the chosen node.
         classic = rpyc.classic.connect(lowest_host[0], port=18812)
-        print "Classic connection established: " + c.root
+        print "Classic connection established: " + classic.root
         print 'Getting ready to upload....'
         # For this to work we are assuming relative path, meaning that the server
         # i.e. this command is being issued from the bin/ directory of the program
         # since absolute paths can be messier and we can control our relative paths
         # much easier using startup scripts instead
-        localpath = '../outgoing/'+runFile
+        localpath = '../outbound/'+runFile
         
         service = rpyc.connect(lowest_host[0], lowest_host[1])
         #make sure there aren't any files on the host node's end with the same filename
         remoteFile = service.exposed_verify_inbound(runFile)
         
         remotepath = '../inbound/' + str(remoteFile)
+        
         rpyc.classic.upload(classic, localpath, remotepath)
         print "File uploaded."
         
