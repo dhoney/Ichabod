@@ -124,15 +124,17 @@ class IchabodService(rpyc.SlaveService):
     
         #PART2 ~ Create incoming file
         #create incoming file of type 'filename_inbound_year-month-day.txt'
+        name, ext = splitext(inName)
+        
         now = datetime.datetime.now()
-        inName = name + '_inbound_' + now.strftime("%Y-%m-%d") + '.txt'
+        inName = name + '_inbound_' + now.strftime("%Y-%m-%d") + ext
         #test for duplicate file names (same job re-submitted multiple times)
         if exists(inName) == True: #add hour and minute if another version exists
-            inName = name + '_inbound_' + now.strftime("%Y-%m-%d_%H:%M") + '.txt'
+            inName = name + '_inbound_' + now.strftime("%Y-%m-%d_%H:%M") + ext
         if exists(inName) == True: #add precision down to second if previous version still exists
-            inName = name + '_inbound_' + now.strftime("%Y-%m-%d_%H:%M.") + str(now.second) + '.txt'
+            inName = name + '_inbound_' + now.strftime("%Y-%m-%d_%H:%M.") + str(now.second) + ext
         if exists(inName) == True: #add microsecond precision if a previous version STILL exists
-            inName = name + '_inbound_' + now.strftime("%Y-%m-%d_%H:%M.") + str(now.second)+ '.' + str(now.microsecond) + '.txt'
+            inName = name + '_inbound_' + now.strftime("%Y-%m-%d_%H:%M.") + str(now.second)+ '.' + str(now.microsecond) + ext
         print 'Inbound file name is: ' + inName
         
         return inName  
