@@ -3,7 +3,7 @@
 
 import platform, datetime, commands,rpyc, shlex, os
 import subprocess as sp
-#from os.path import splitext, exists
+from os.path import splitext, exists
 
 PORT = 18861
 
