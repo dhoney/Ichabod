@@ -93,7 +93,7 @@ class IchabodService(rpyc.SlaveService):
         #STEP 2 - Create classical connection and make use of upload() method
         #         exposed by SlaveService to send job file to the chosen node.
         classic = rpyc.classic.connect(lowest_host[0], port=18812)
-        print "Classic connection established: " + classic.root
+        print "Classic connection established: ", classic.root
         print 'Getting ready to upload....'
         # For this to work we are assuming relative path, meaning that the server
         # i.e. this command is being issued from the bin/ directory of the program
