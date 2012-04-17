@@ -1,1 +1,10 @@
-Test
+Ichabod - A Headless Distributed System
+
+This system is designed to disseminate jobs based on load averages of nodes. For now the system is best suited for local/virtual networks and there are many many features that need to be added later for this be a compitent piece of usable software for people other than me and my adviser.
+
+Features to be added:
+1. web based front end and submission system
+2. ability to add and remove nodes from the network
+3. lamport logical clock
+4. unique has ID for nodes
+5. package Ichabod as a daemon process or something that can be started without root acceess
