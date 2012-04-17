@@ -1,6 +1,6 @@
 Ichabod - A Headless Distributed System
 
-This system is designed to disseminate jobs based on load averages of nodes. For now the system is best suited for local/virtual networks and there are many many features that need to be added later for this be a compitent piece of usable software for people other than me and my adviser.
+This system is designed to disseminate jobs based on load averages of nodes. For now the system is best suited for local/virtual networks and there are many many features that need to be added later for this be a competent piece of usable software for people other than me and my advisor.
 
 Features to be added:
 1. web based front end and submission system
