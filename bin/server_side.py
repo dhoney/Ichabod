@@ -110,7 +110,7 @@ class IchabodService(rpyc.SlaveService):
         rpyc.classic.upload(classic, localpath, remotepath)
         print "File uploaded."
         
-        service.exposed_run(remotepath)
+        service.root.exposed_run(remotepath)
         print "File run remotely."
 
     
