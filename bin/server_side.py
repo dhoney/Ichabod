@@ -112,6 +112,34 @@ class IchabodService(rpyc.SlaveService):
         
         service.root.exposed_run(remotepath)
         print "File run remotely."
+        
+        ###################################################
+        #EMAIL
+        
+        from smtplib import SMTP
+        #import datetime
+
+        debuglevel = 0
+
+        smtp = SMTP()
+        smtp.set_debuglevel(debuglevel)
+        smtp.connect('mail.cs.wm.edu', 25)
+        smtp.login('dmhoney', 'Dwmh682534')
+
+        from_addr = "Ichabod <Ichabod@Crane.net>"
+        to_addr = "dmhoney@cs.wm.edu"
+
+        subj = "Job Submitted"
+        date = datetime.datetime.now().strftime( "%d/%m/%Y %H:%M" )
+
+        message_text = "Hello\n This is a mail from Ichabod. Your job was submitted to node " ,lowest_host[0] , " for processing. \n\nBye\n"
+
+        msg = "From: %s\nTo: %s\nSubject: %s\nDate: %s\n\n%s" % ( from_addr, to_addr, subj, date, message_text )
+
+        smtp.sendmail(from_addr, to_addr, msg)
+        smtp.quit()
+                
+        ###################################################
 
     
     def exposed_verify_inbound(self, inName):
