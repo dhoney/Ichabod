@@ -124,7 +124,7 @@ class IchabodService(rpyc.SlaveService):
         smtp = SMTP()
         smtp.set_debuglevel(debuglevel)
         smtp.connect('mail.cs.wm.edu', 25)
-        smtp.login('dmhoney', 'Dwmh682534')
+        smtp.login('dmhoney', '')
 
         from_addr = "Ichabod <Ichabod@Crane.net>"
         to_addr = "dmhoney@cs.wm.edu"
