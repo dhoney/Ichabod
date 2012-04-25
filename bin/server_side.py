@@ -285,12 +285,13 @@ def change_global(port):
 
 if __name__ == "__main__":
         from rpyc.utils.server import ThreadedServer
-        p = raw_input("Enter port number: ") #usually 18811
+        #p = raw_input("Enter port number: ") #usually 18811
+        p = 18861
         t = ThreadedServer(IchabodService, port = int(p))
-        print 'Ichabod service started on port ' + p
+        print 'Ichabod service started on port ', p
         change_global(int(p))
         print 'Global set to ' + str(PORT)
         t.start()
-        print 'test'
+        print 'exiting'
     
     
