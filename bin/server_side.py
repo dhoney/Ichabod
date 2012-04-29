@@ -56,13 +56,18 @@ class IchabodService(rpyc.SlaveService):
         for host in hosts:
             connection = shlex.split(host)
             print 'getting host: ' + str(connection)
-            c = rpyc.connect(connection[0], int(connection[1]))
-            print 'getting load...'
-            l = c.root.exposed_get_load()
-            print l
-            info = [connection[0], connection[1], l]
-            loads.append(info)
-            c.close()
+            
+            try:
+                c = rpyc.connect(connection[0], int(connection[1]))
+                print 'getting load...'
+                l = c.root.exposed_get_load()
+                print l
+                info = [connection[0], connection[1], l]
+                loads.append(info)
+                c.close()
+            except:
+                print "Can't connect to host " + str(connection) + ". Probably anti-social..." 
+          
         print "Loads of all nodes retrieved: " + str(loads)
         return loads
         
