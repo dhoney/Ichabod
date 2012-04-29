@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    
+    <style type="text/css" media="all">
+		@import "static/style.css";
+	</style>
+
+    <title>Ichabod - Headless Distributed System</title>
+</head>
+<body>
+
+    <b>Welcome to Ichabod</b> : Node {{info[1][1]}}, ready to serve.
+
+<hr class='one'noshade="noshade" />
+    <ul>
+    <li><b>Node Info:</b></li>
+        <ul>
+            <li>{{info[1][0]}}</li>
+            <li>{{info[1][1]}}</li>    
+            <li>{{info[0][0]}}</li>
+            <li>{{info[1][4]}}</li>
+            <li>{{info[1][2]}}</li>
+        </ul>
+    <li><b>Load Average:</b></li>
+    <ul>    
+            <li>{{load[0]}}, {{load[1]}}, {{load[2]}}</li>
+        </ul>
+    </ul>
+    
+    
+    <form name="jobSubmit" method="post">
+    Upload file for job submission </br>
+    <input type="hidden" name="MAX_FILE_SIZE" value="25000" />
+    <input type="file" name="uploadField" /> </br>
+    <input type="submit" value="Submit" />
+    </form>
+
+</body>
+</html>
